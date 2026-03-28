@@ -6,6 +6,7 @@ import 'screens/api_screen.dart';
 import 'screens/prompts_screen.dart';
 import 'screens/features_screen.dart';
 import 'screens/chat_screen.dart';
+import 'screens/faq_screen.dart';
 
 // ─── Material themes ──────────────────────────────────────────────────────────
 class AppThemes {
@@ -99,6 +100,7 @@ class ThemeConfig {
       NavItem(icon: Icons.auto_awesome_outlined, label: 'Prompts',         color: Color(0xFF64B5F6)),
       NavItem(icon: Icons.star_outline,          label: 'Fonctionnalités', color: Color(0xFF0288D1)),
       NavItem(icon: Icons.chat_bubble_outline,   label: 'Chat Gemini',     color: Color(0xFF29B6F6)),
+      NavItem(icon: Icons.help_outline,           label: 'FAQ',             color: Color(0xFF4DD0E1)),
     ],
   );
 
@@ -119,6 +121,7 @@ class ThemeConfig {
       NavItem(icon: Icons.auto_awesome_outlined, label: 'Prompts',         color: Color(0xFF0288D1)),
       NavItem(icon: Icons.star_outline,          label: 'Fonctionnalités', color: Color(0xFFAD1457)),
       NavItem(icon: Icons.chat_bubble_outline,   label: 'Chat Gemini',     color: Color(0xFF4527A0)),
+      NavItem(icon: Icons.help_outline,           label: 'FAQ',             color: Color(0xFF7B1FA2)),
     ],
   );
 }
@@ -150,12 +153,31 @@ class GeminiGuideApp extends StatelessWidget {
 // ─── Main scaffold ────────────────────────────────────────────────────────────
 class MainScaffold extends StatefulWidget {
   const MainScaffold({super.key});
+
+  static final tabNotifier = ValueNotifier<int>(0);
+
   @override
   State<MainScaffold> createState() => _MainScaffoldState();
 }
 
 class _MainScaffoldState extends State<MainScaffold> {
   int _currentIndex = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    MainScaffold.tabNotifier.addListener(_onTabChange);
+  }
+
+  @override
+  void dispose() {
+    MainScaffold.tabNotifier.removeListener(_onTabChange);
+    super.dispose();
+  }
+
+  void _onTabChange() {
+    setState(() => _currentIndex = MainScaffold.tabNotifier.value);
+  }
 
   static const _screens = [
     HomeScreen(),
@@ -164,6 +186,7 @@ class _MainScaffoldState extends State<MainScaffold> {
     PromptsScreen(),
     FeaturesScreen(),
     ChatScreen(),
+    FaqScreen(),
   ];
 
   static const _titles = [
@@ -173,6 +196,7 @@ class _MainScaffoldState extends State<MainScaffold> {
     'Prompts',
     'Fonctionnalités',
     'Chat Gemini',
+    'FAQ',
   ];
 
   ThemeConfig get _cfg =>
@@ -326,7 +350,7 @@ class _MainScaffoldState extends State<MainScaffold> {
             child: Padding(
               padding: const EdgeInsets.all(16),
               child: Text(
-                'Gemini Guide v1.0',
+                'Gemini Guide v2.0',
                 style: TextStyle(color: cfg.footerText, fontSize: 12),
               ),
             ),

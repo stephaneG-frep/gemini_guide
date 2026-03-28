@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../app_theme.dart';
+import '../main.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -57,6 +58,15 @@ class HomeScreen extends StatelessWidget {
           description: 'Vecteurs sémantiques 768 dimensions pour RAG et recherche.',
           color: context.palette[4],
         ),
+        sectionTitle('Limites & Tarifs', context),
+        _buildTarifCard(context),
+        const SizedBox(height: 4),
+        sectionTitle('Parcours suggéré', context),
+        _StepCard(step: 1, label: 'Obtenir une clé API', icon: Icons.key_outlined, onTap: () => launchUrl(Uri.parse('https://aistudio.google.com/apikey'))),
+        _StepCard(step: 2, label: 'Installation du SDK', icon: Icons.download_outlined, onTap: () => MainScaffold.tabNotifier.value = 1),
+        _StepCard(step: 3, label: 'Premier appel API', icon: Icons.code_outlined, onTap: () => MainScaffold.tabNotifier.value = 2),
+        _StepCard(step: 4, label: 'Explorer les prompts', icon: Icons.auto_awesome_outlined, onTap: () => MainScaffold.tabNotifier.value = 3),
+        _StepCard(step: 5, label: 'Chat en direct', icon: Icons.chat_bubble_outline, onTap: () => MainScaffold.tabNotifier.value = 5),
         sectionTitle('Liens utiles', context),
         _LinkCard(
           icon: Icons.web,
@@ -77,6 +87,56 @@ class HomeScreen extends StatelessWidget {
           url: 'https://aistudio.google.com/apikey',
         ),
       ],
+    );
+  }
+
+  Widget _buildTarifCard(BuildContext context) {
+    final rows = [
+      ('Gemini 1.5 Flash', '15 req/min', '1M tokens/jour', 'Gratuit'),
+      ('Gemini 1.5 Pro', '2 req/min', '50M tokens/jour', 'Gratuit'),
+      ('Gemini 2.0 Flash', '15 req/min', '1M tokens/jour', 'Gratuit'),
+    ];
+    return Container(
+      margin: const EdgeInsets.only(bottom: 8),
+      padding: const EdgeInsets.all(14),
+      decoration: BoxDecoration(
+        color: context.cardBg,
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: context.accentMid.withValues(alpha: 0.3)),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Icon(Icons.info_outline, color: context.accentLight, size: 16),
+              const SizedBox(width: 8),
+              Text('Plan gratuit (AI Studio)', style: TextStyle(color: context.accentLight, fontWeight: FontWeight.w600, fontSize: 13)),
+            ],
+          ),
+          const SizedBox(height: 10),
+          ...rows.map((r) => Padding(
+            padding: const EdgeInsets.only(bottom: 6),
+            child: Row(
+              children: [
+                Expanded(flex: 3, child: Text(r.$1, style: TextStyle(color: context.onSurface, fontSize: 12, fontWeight: FontWeight.w500))),
+                Expanded(flex: 2, child: Text(r.$2, style: TextStyle(color: context.onSurface.withValues(alpha: 0.7), fontSize: 11))),
+                Expanded(flex: 3, child: Text(r.$3, style: TextStyle(color: context.onSurface.withValues(alpha: 0.7), fontSize: 11))),
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                  decoration: BoxDecoration(color: Colors.green.withValues(alpha: 0.15), borderRadius: BorderRadius.circular(4)),
+                  child: const Text('Gratuit', style: TextStyle(color: Colors.green, fontSize: 10, fontWeight: FontWeight.w600)),
+                ),
+              ],
+            ),
+          )),
+          const SizedBox(height: 4),
+          GestureDetector(
+            onTap: () => launchUrl(Uri.parse('https://ai.google.dev/pricing')),
+            child: Text('Voir tous les tarifs →', style: TextStyle(color: context.accentLight, fontSize: 12, decoration: TextDecoration.underline)),
+          ),
+        ],
+      ),
     );
   }
 
@@ -261,6 +321,50 @@ class _LinkCard extends StatelessWidget {
             ),
             Icon(Icons.open_in_new,
                 color: context.accentMid.withValues(alpha: 0.6), size: 16),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _StepCard extends StatelessWidget {
+  final int step;
+  final String label;
+  final IconData icon;
+  final VoidCallback onTap;
+  const _StepCard({required this.step, required this.label, required this.icon, required this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        margin: const EdgeInsets.only(bottom: 8),
+        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+        decoration: BoxDecoration(
+          color: context.cardBg,
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(color: context.accentMid.withValues(alpha: 0.25)),
+        ),
+        child: Row(
+          children: [
+            Container(
+              width: 28,
+              height: 28,
+              decoration: BoxDecoration(
+                color: context.accentMid.withValues(alpha: 0.15),
+                shape: BoxShape.circle,
+              ),
+              child: Center(
+                child: Text('$step', style: TextStyle(color: context.accentLight, fontWeight: FontWeight.bold, fontSize: 13)),
+              ),
+            ),
+            const SizedBox(width: 12),
+            Icon(icon, color: context.accentLight, size: 20),
+            const SizedBox(width: 10),
+            Expanded(child: Text(label, style: TextStyle(color: context.onSurface, fontWeight: FontWeight.w500))),
+            Icon(Icons.arrow_forward_ios, color: context.accentMid.withValues(alpha: 0.5), size: 14),
           ],
         ),
       ),

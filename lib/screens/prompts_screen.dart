@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../app_theme.dart';
+import '../main.dart';
+import 'chat_screen.dart';
 
 class PromptsScreen extends StatefulWidget {
   const PromptsScreen({super.key});
@@ -157,6 +159,10 @@ class _PromptCard extends StatefulWidget {
 class _PromptCardState extends State<_PromptCard> {
   bool _expanded = false;
 
+  void _navigateToChat(BuildContext context) {
+    MainScaffold.tabNotifier.value = 5;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -203,23 +209,34 @@ class _PromptCardState extends State<_PromptCard> {
                         height: 1.5),
                   ),
                   const SizedBox(height: 8),
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: TextButton.icon(
-                      onPressed: () {
-                        Clipboard.setData(ClipboardData(text: widget.prompt.text));
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: const Text('Prompt copié !'),
-                            backgroundColor: widget.color,
-                            duration: const Duration(seconds: 2),
-                          ),
-                        );
-                      },
-                      icon: Icon(Icons.copy, size: 14, color: widget.color),
-                      label: Text('Copier',
-                          style: TextStyle(color: widget.color, fontSize: 12)),
-                    ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      TextButton.icon(
+                        onPressed: () {
+                          Clipboard.setData(ClipboardData(text: widget.prompt.text));
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: const Text('Prompt copié !'),
+                              backgroundColor: widget.color,
+                              duration: const Duration(seconds: 2),
+                            ),
+                          );
+                        },
+                        icon: Icon(Icons.copy, size: 14, color: widget.color),
+                        label: Text('Copier',
+                            style: TextStyle(color: widget.color, fontSize: 12)),
+                      ),
+                      TextButton.icon(
+                        onPressed: () {
+                          ChatScreen.pendingPrompt.value = widget.prompt.text;
+                          _navigateToChat(context);
+                        },
+                        icon: Icon(Icons.chat_bubble_outline, size: 14, color: widget.color),
+                        label: Text('Tester dans le chat',
+                            style: TextStyle(color: widget.color, fontSize: 12)),
+                      ),
+                    ],
                   ),
                 ],
               ),
