@@ -27,8 +27,8 @@ class _ChatScreenState extends State<ChatScreen> {
   final List<_Msg> _display = [];
   final List<Map<String, dynamic>> _history = [];
 
-  String _model = 'gemini-1.5-flash';
-  static const _models = ['gemini-1.5-flash', 'gemini-1.5-pro', 'gemini-2.0-flash'];
+  String _model = 'gemini-2.0-flash';
+  static const _models = ['gemini-2.0-flash', 'gemini-2.0-flash-lite', 'gemini-1.5-flash', 'gemini-1.5-flash-8b', 'gemini-1.5-pro'];
 
   static const _prefKey = 'gemini_api_key';
   static const _historyKey = 'chat_history';

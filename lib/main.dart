@@ -7,6 +7,7 @@ import 'screens/prompts_screen.dart';
 import 'screens/features_screen.dart';
 import 'screens/chat_screen.dart';
 import 'screens/faq_screen.dart';
+import 'screens/playground_screen.dart';
 
 // ─── Material themes ──────────────────────────────────────────────────────────
 class AppThemes {
@@ -101,6 +102,7 @@ class ThemeConfig {
       NavItem(icon: Icons.star_outline,          label: 'Fonctionnalités', color: Color(0xFF0288D1)),
       NavItem(icon: Icons.chat_bubble_outline,   label: 'Chat Gemini',     color: Color(0xFF29B6F6)),
       NavItem(icon: Icons.help_outline,           label: 'FAQ',             color: Color(0xFF4DD0E1)),
+      NavItem(icon: Icons.science_outlined,       label: 'Playground',      color: Color(0xFF29B6F6)),
     ],
   );
 
@@ -122,6 +124,7 @@ class ThemeConfig {
       NavItem(icon: Icons.star_outline,          label: 'Fonctionnalités', color: Color(0xFFAD1457)),
       NavItem(icon: Icons.chat_bubble_outline,   label: 'Chat Gemini',     color: Color(0xFF4527A0)),
       NavItem(icon: Icons.help_outline,           label: 'FAQ',             color: Color(0xFF7B1FA2)),
+      NavItem(icon: Icons.science_outlined,       label: 'Playground',      color: Color(0xFFE91E63)),
     ],
   );
 }
@@ -187,6 +190,7 @@ class _MainScaffoldState extends State<MainScaffold> {
     FeaturesScreen(),
     ChatScreen(),
     FaqScreen(),
+    PlaygroundScreen(),
   ];
 
   static const _titles = [
@@ -197,6 +201,7 @@ class _MainScaffoldState extends State<MainScaffold> {
     'Fonctionnalités',
     'Chat Gemini',
     'FAQ',
+    'Playground',
   ];
 
   ThemeConfig get _cfg =>
@@ -208,6 +213,7 @@ class _MainScaffoldState extends State<MainScaffold> {
       valueListenable: themeNotifier,
       builder: (context, themeVal, child) => Scaffold(
         appBar: AppBar(
+          iconTheme: const IconThemeData(color: Colors.white),
           title: Text(
             _titles[_currentIndex],
             style: TextStyle(
@@ -253,7 +259,6 @@ class _MainScaffoldState extends State<MainScaffold> {
         children: [
           // Header
           Container(
-            height: 200,
             width: double.infinity,
             decoration: BoxDecoration(
               gradient: LinearGradient(
