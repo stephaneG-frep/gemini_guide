@@ -8,6 +8,7 @@ import 'screens/features_screen.dart';
 import 'screens/chat_screen.dart';
 import 'screens/faq_screen.dart';
 import 'screens/playground_screen.dart';
+import 'screens/splash_screen.dart';
 
 // ─── Material themes ──────────────────────────────────────────────────────────
 class AppThemes {
@@ -146,7 +147,7 @@ class GeminiGuideApp extends StatelessWidget {
           title: 'Gemini Guide',
           debugShowCheckedModeBanner: false,
           theme: theme == AppTheme.darkBlue ? AppThemes.darkBlue : AppThemes.blueRose,
-          home: const MainScaffold(),
+          home: const SplashScreen(),
         );
       },
     );
