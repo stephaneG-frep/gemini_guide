@@ -8,6 +8,10 @@ import 'screens/features_screen.dart';
 import 'screens/chat_screen.dart';
 import 'screens/faq_screen.dart';
 import 'screens/playground_screen.dart';
+import 'screens/google_screen.dart';
+import 'screens/apps_screen.dart';
+import 'screens/quiz_screen.dart';
+import 'screens/ai_agents_screen.dart';
 import 'screens/splash_screen.dart';
 
 // ─── Material themes ──────────────────────────────────────────────────────────
@@ -104,6 +108,10 @@ class ThemeConfig {
       NavItem(icon: Icons.chat_bubble_outline,   label: 'Chat Gemini',     color: Color(0xFF29B6F6)),
       NavItem(icon: Icons.help_outline,           label: 'FAQ',             color: Color(0xFF4DD0E1)),
       NavItem(icon: Icons.science_outlined,       label: 'Playground',      color: Color(0xFF29B6F6)),
+      NavItem(icon: Icons.hub_outlined,           label: 'Google & Imagen',  color: Color(0xFF1E88E5)),
+      NavItem(icon: Icons.apps_outlined,          label: 'Applications',     color: Color(0xFF4DD0E1)),
+      NavItem(icon: Icons.quiz_outlined,          label: 'Quiz',             color: Color(0xFF29B6F6)),
+      NavItem(icon: Icons.smart_toy_outlined,     label: 'IA & Agents',      color: Color(0xFF42A5F5)),
     ],
   );
 
@@ -126,6 +134,10 @@ class ThemeConfig {
       NavItem(icon: Icons.chat_bubble_outline,   label: 'Chat Gemini',     color: Color(0xFF4527A0)),
       NavItem(icon: Icons.help_outline,           label: 'FAQ',             color: Color(0xFF7B1FA2)),
       NavItem(icon: Icons.science_outlined,       label: 'Playground',      color: Color(0xFFE91E63)),
+      NavItem(icon: Icons.hub_outlined,           label: 'Google & Imagen',  color: Color(0xFF7B1FA2)),
+      NavItem(icon: Icons.apps_outlined,          label: 'Applications',     color: Color(0xFFAD1457)),
+      NavItem(icon: Icons.quiz_outlined,          label: 'Quiz',             color: Color(0xFF4527A0)),
+      NavItem(icon: Icons.smart_toy_outlined,     label: 'IA & Agents',      color: Color(0xFF7B1FA2)),
     ],
   );
 }
@@ -192,6 +204,10 @@ class _MainScaffoldState extends State<MainScaffold> {
     ChatScreen(),
     FaqScreen(),
     PlaygroundScreen(),
+    GoogleScreen(),
+    AppsScreen(),
+    QuizScreen(),
+    AiAgentsScreen(),
   ];
 
   static const _titles = [
@@ -203,6 +219,10 @@ class _MainScaffoldState extends State<MainScaffold> {
     'Chat Gemini',
     'FAQ',
     'Playground',
+    'Google & Imagen',
+    'Applications',
+    'Quiz',
+    'IA & Agents',
   ];
 
   ThemeConfig get _cfg =>
@@ -276,14 +296,14 @@ class _MainScaffoldState extends State<MainScaffold> {
                   mainAxisAlignment: MainAxisAlignment.end,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Container(
-                      width: 48,
-                      height: 48,
-                      decoration: BoxDecoration(
-                        color: Colors.white.withValues(alpha: 0.2),
-                        borderRadius: BorderRadius.circular(12),
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(16),
+                      child: Image.asset(
+                        'assets/images/mon_logo.jpeg',
+                        width: 110,
+                        height: 170,
+                        fit: BoxFit.cover,
                       ),
-                      child: const Icon(Icons.auto_awesome, color: Colors.white, size: 28),
                     ),
                     const SizedBox(height: 12),
                     const Text(
